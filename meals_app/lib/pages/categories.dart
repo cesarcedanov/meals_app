@@ -8,11 +8,6 @@ class CategoriesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.delete),
-          )
-        ],
         title: Text('Meals Recipes'),
       ),
       body: GridView(
