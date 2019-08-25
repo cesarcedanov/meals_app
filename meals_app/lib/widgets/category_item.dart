@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pages/meals.dart';
+import '../pages/category_meals_page.dart';
 
 class CategoryItem extends StatelessWidget {
   final String id;
@@ -14,7 +14,7 @@ class CategoryItem extends StatelessWidget {
     //     return Meals(id, title);
     //   },
     // ));
-    Navigator.of(ctx).pushNamed(Meals.routeName, arguments: {
+    Navigator.of(ctx).pushNamed(CategoryMealsPage.routeName, arguments: {
       'id': id,
       'title': title,
     });
