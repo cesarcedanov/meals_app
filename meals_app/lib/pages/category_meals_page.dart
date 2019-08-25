@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../dummy_data.dart';
 
 class CategoryMealsPage extends StatelessWidget {
   static const routeName = '/category_meals';
@@ -12,16 +13,22 @@ class CategoryMealsPage extends StatelessWidget {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, String>;
     final categoryTitle = routeArgs['title'];
-    // final categoryId = routeArgs['id'];
+    final categoryId = routeArgs['id'];
+
+    final mealsByCategoryId = DUMMY_MEALS.where((meal) {
+      return meal.categories.contains(categoryId);
+    }).toList();
+
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text('$categoryTitle recipes'),
         ),
         body: ListView.builder(
           itemBuilder: (ctx, index) {
-            return Text(index.toString());
+            return Text(mealsByCategoryId[index].title);
           },
-          itemCount: 10,
+          itemCount: mealsByCategoryId.length,
         ));
   }
 }
