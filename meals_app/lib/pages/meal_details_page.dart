@@ -33,7 +33,7 @@ class MealDetailsPage extends StatelessWidget {
               ),
               margin: const EdgeInsets.symmetric(horizontal: 10),
               padding: EdgeInsets.all(10),
-              height: 150,
+              height: 125,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                 itemBuilder: (ctx, index) => Card(
@@ -55,7 +55,7 @@ class MealDetailsPage extends StatelessWidget {
               ),
               margin: const EdgeInsets.symmetric(horizontal: 10),
               padding: EdgeInsets.all(10),
-              height: 150,
+              height: 125,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                 itemBuilder: (ctx, index) => ListTile(
