@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../molecules/stack_image_text.dart';
+import '../molecules/sectiobn_title.dart';
 import '../models/meal.dart';
 
 class MealDetailsPage extends StatelessWidget {
@@ -13,59 +13,59 @@ class MealDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(meal.title),
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            StackImageText(meal.imageUrl, meal.title),
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                Text(
-                  'INGREDIENTS',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                ...meal.ingredients.map((ingredient) {
-                  return Text(ingredient,
-                      style: TextStyle(
-                        fontSize: 14,
-                      ));
-                })
-              ],
+            Container(
+              height: 250,
+              width: double.infinity,
+              child: Image.network(
+                meal.imageUrl,
+                fit: BoxFit.cover,
+              ),
             ),
-            Divider(
-              height: 10,
-              color: Colors.black,
-            ),
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                Text(
-                  'STEPS',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+            SectionTitle('Ingredients'),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.all(10),
+              height: 150,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                itemBuilder: (ctx, index) => Card(
+                  color: Theme.of(context).accentColor,
+                  child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      child: Text(meal.ingredients[index])),
                 ),
-                ...meal.steps.map((step) {
-                  return Row(
-                    children: <Widget>[
-                      Icon(Icons.check),
-                      Text(
-                        step,
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        softWrap: true,
-                        overflow: TextOverflow.fade,
-                      )
-                    ],
-                  );
-                }),
-              ],
+                itemCount: meal.ingredients.length,
+              ),
+            ),
+            SectionTitle('Steps'),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.all(10),
+              height: 150,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                itemBuilder: (ctx, index) => ListTile(
+                  leading: CircleAvatar(
+                    child: Text('${index + 1}'),
+                  ),
+                  title: Text(meal.steps[index]),
+                ),
+                itemCount: meal.steps.length,
+              ),
             ),
           ],
         ),
