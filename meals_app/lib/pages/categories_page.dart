@@ -7,10 +7,6 @@ class CategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('Meals Recipes'),
-      ),
       body: GridView(
         padding: const EdgeInsets.all(20),
         children: DUMMY_CATEGORIES

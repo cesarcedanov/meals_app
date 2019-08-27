@@ -13,62 +13,65 @@ class MealDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(meal.title),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 250,
-              width: double.infinity,
-              child: Image.network(
-                meal.imageUrl,
-                fit: BoxFit.cover,
-              ),
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: 250,
+            width: double.infinity,
+            child: Image.network(
+              meal.imageUrl,
+              fit: BoxFit.cover,
             ),
-            SectionTitle('Ingredients'),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.circular(10),
+          ),
+          SectionTitle('Ingredients'),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.all(10),
+            height: 125,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+              itemBuilder: (ctx, index) => Card(
+                color: Theme.of(context).accentColor,
+                child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    child: Text(meal.ingredients[index])),
               ),
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              padding: EdgeInsets.all(10),
-              height: 125,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                itemBuilder: (ctx, index) => Card(
-                  color: Theme.of(context).accentColor,
-                  child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                      child: Text(meal.ingredients[index])),
+              itemCount: meal.ingredients.length,
+            ),
+          ),
+          SectionTitle('Steps'),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.all(10),
+            height: 125,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+              itemBuilder: (ctx, index) => ListTile(
+                leading: CircleAvatar(
+                  child: Text('${index + 1}'),
                 ),
-                itemCount: meal.ingredients.length,
+                title: Text(meal.steps[index]),
               ),
+              itemCount: meal.steps.length,
             ),
-            SectionTitle('Steps'),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              padding: EdgeInsets.all(10),
-              height: 125,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                itemBuilder: (ctx, index) => ListTile(
-                  leading: CircleAvatar(
-                    child: Text('${index + 1}'),
-                  ),
-                  title: Text(meal.steps[index]),
-                ),
-                itemCount: meal.steps.length,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete),
+        onPressed: () {
+          Navigator.of(context).pop(meal.id);
+        },
       ),
     );
   }

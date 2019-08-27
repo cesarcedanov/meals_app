@@ -6,11 +6,18 @@ import '../pages/meal_details_page.dart';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
+  final Function removeMeal;
 
-  MealItem({@required this.meal});
+  MealItem({@required this.meal, @required this.removeMeal});
 
   void onSelectMeal(ctx) {
-    Navigator.of(ctx).pushNamed(MealDetailsPage.routeName, arguments: meal);
+    Navigator.of(ctx)
+        .pushNamed(MealDetailsPage.routeName, arguments: meal)
+        .then((result) {
+      if (result != null) {
+        removeMeal(result);
+      }
+    });
   }
 
   @override
