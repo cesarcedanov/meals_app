@@ -8,14 +8,14 @@ class MealItem extends StatelessWidget {
   final Meal meal;
   final Function removeMeal;
 
-  MealItem({@required this.meal, @required this.removeMeal});
+  MealItem({@required this.meal, this.removeMeal});
 
   void onSelectMeal(ctx) {
     Navigator.of(ctx)
         .pushNamed(MealDetailsPage.routeName, arguments: meal)
         .then((result) {
       if (result != null) {
-        removeMeal(result);
+        // removeMeal(result);
       }
     });
   }

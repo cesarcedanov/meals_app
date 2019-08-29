@@ -22,12 +22,13 @@ class _MyAppState extends State<MyApp> {
     'lactose': false,
   };
 
-  List<Meal> availableMeals = DUMMY_MEALS;
+  List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoritedMeals = [];
 
   void _setFilters(Map<String, bool> filterData) {
     setState(() {
       _filters = filterData;
-      availableMeals = DUMMY_MEALS.where((meal) {
+      _availableMeals = DUMMY_MEALS.where((meal) {
         if (_filters['gluten'] && !meal.isGlutenFree) {
           return false;
         }
@@ -44,6 +45,24 @@ class _MyAppState extends State<MyApp> {
         return true;
       }).toList();
     });
+  }
+
+  void _toggleFavorite(String mealId) {
+    setState(() {
+      final mealIndex = _favoritedMeals.indexWhere((meal) => meal.id == mealId);
+      if (mealIndex >= 0) {
+        setState(() {
+          _favoritedMeals.removeAt(mealIndex);
+        });
+      } else {
+        _favoritedMeals
+            .add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+      }
+    });
+  }
+
+  bool _isMealFavorite(String mealId) {
+    return _favoritedMeals.any((meal) => meal.id == mealId);
   }
 
   @override
@@ -71,9 +90,11 @@ class _MyAppState extends State<MyApp> {
       // home: CategoriesPage(),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => TabsPage(),
-        CategoryMealsPage.routeName: (ctx) => CategoryMealsPage(availableMeals),
-        MealDetailsPage.routeName: (ctx) => MealDetailsPage(),
+        '/': (ctx) => TabsPage(_favoritedMeals),
+        CategoryMealsPage.routeName: (ctx) =>
+            CategoryMealsPage(_availableMeals),
+        MealDetailsPage.routeName: (ctx) =>
+            MealDetailsPage(_toggleFavorite, _isMealFavorite),
         FiltersPage.routeName: (ctx) => FiltersPage(_setFilters, _filters),
       },
       onGenerateRoute: (settings) {
